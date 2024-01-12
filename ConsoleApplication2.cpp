@@ -2,94 +2,61 @@
 //
 
 #include <iostream>
-#include <iomanip>
-#include <cmath>
-using namespace std;
+#include <cstring>
 
+using namespace std; 
 
+int sum(int matrix[][100],int k, int n) {
+    int sum = 0;
+    for (size_t i = k; i < n-k; i++)
+    {
+        for (size_t j = k; j < n-k; j++)
+        {
+            sum += matrix[i][j];
+        }
+        
+    }
+}
+void equalRings(int matrix[][100],int x,int maxX,int*& coords,int target, int size) {
+    if (x<maxX)
+    {
+        return;
+    }
+    if (sum(matrix,x,size)!=target)
+    {
+        coords[0] = x;
+        coords[1] = x;
+        return;
+    }
+    else
+    {
+        equalRings(matrix, x - 1, maxX, coords,target,size);
+    }
+
+}
 int main()
 {
-    /* Zadacha 1 
-    cout << "Ivan Ivanov"<<endl;
-    int age=19;
-    cout << age << "->" << &age <<" "<< sizeof(age);*/
+    int n=5;
+    //cin >> n;
+    int coords[2] = {-1,-1};
+    int matrix[5][5];
+    int target=0;
+    if (n%2==0)
+    {
+        for (size_t i = n/2-1; i <= n/2; i++)
+        {
+            for (size_t j = n / 2 - 1; j <= n / 2; j++)
+            {
+                target += matrix[i][j];
+            }
+           
+        }
+    }
+    else
+    {
+        target = matrix[n/2-1][n/2-1];
+    }
 
-   /* Zadacha 2 .
-   cout << "The size of char is " << sizeof(char) <<endl;
-    cout << "The size of short is " << sizeof(short) <<  endl;
-    cout << "The size of int is " << sizeof(int) <<  endl;
-    cout << "The size of long long is " << sizeof(long long) << endl;
-    cout << "The size of long is " << sizeof(long) <<  endl;
-    cout << "The size of long double is " << sizeof(long double) << endl;
-    cout << "The size of double is " << sizeof(double)  << endl;
-    cout << "The size of float is " << sizeof(float)  << endl;
-    cout << "The size of bool is " << sizeof(bool) << endl;*/
-
-    /*ZADACHA 3
-    cout << "The maximum limit of int data type:" << INT_MAX<< endl;
-    cout << "The MINIMUM limit of int data type:" << INT_MIN << endl;
-    cout << "The maximum limit of unsigned int data type:" << UINT_MAX << endl;
-    cout << "The maximum limit of long long data type:" <<LLONG_MAX << endl;
-    cout << "The MINIMUM limit of long long data type:" << LLONG_MIN << endl;
-    cout << "The Bits contain in char data type:" << sizeof(char)*CHAR_BIT << endl;
-    cout << "The maximum limit of SIGNED CHAR data type:" << SCHAR_MAX << endl;
-    cout << "The MINIMUM limit of SIGNED CHAR data type:" << SCHAR_MIN << endl;
-    cout << "The maximum limit of unsigned CHAR data type:" << UCHAR_MAX << endl;
-    cout << "The MINIMUM limit of short  CHAR data type:" << SHRT_MIN << endl;
-    cout << "The maximum limit of short  data type:" << SHRT_MAX << endl;
-    cout << "The MINIMUM limit of UNSIGNED short  data type:" << USHRT_MAX << endl;*/
-
-
-   /* ZADACHA 4*/
-    /*int a, b;
-    cin >> a >> b;
-    cout << a+b<<endl;
-    cout << abs(a-b)<<endl;
-    cout << a % b<<endl;
-    cout << double(a) / double(b)<<endl;
-    cout << floor(double(a) / double(b))<<endl;
-    int c = floor(double(a) / double(b));
-    cout << ceil(double(a) / double(b))<<endl;
-    cout <<pow(a,sqrt(b))<<endl;
-    cout <<setprecision(6)<<log2(c)<<endl;*/
-     
-    /*ZADACHA5
-    int a, b,c;
-    cin >> a >> b;
-    c = a;
-    a = b;
-    b = c;
-    cout << a << " " << b;*/
-
-    /*ZADACHA6 
-    int a;
-    cin >> a;
-    int firstDigit = a / 1000;
-    a = a % 1000;
-    int secondDigit = a / 100;
-    a = a % 100;
-    int thirdDigit = a / 10;
-    int lastDigit = a % 10;
-    cout << lastDigit << "-" << thirdDigit << "-" << secondDigit << "-" << firstDigit;*/
-
-   /*ZADACHA7
-   char a;
-    cin >> a;
-    cout << (int)a;*/
-
-   /*ZADACHA8
-   double a;
-    cin >> a;
-    cout << round(a);*/
-
-    bool a = sqrt(a)%10==0;
-
-    
-    
-
-
-
-    
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
