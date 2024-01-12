@@ -3,26 +3,34 @@
 
 #include <iostream>
 #include <cstring>
+#include "ConsoleApplication7.h"
 
-using namespace std; 
+using namespace std;
 
-int sum(int matrix[][100],int k, int n) {
+int sum(int** matrix, int k, int n) {
     int sum = 0;
-    for (size_t i = k; i < n-k; i++)
+    for (size_t i = k; i < n - k; i++)
     {
-        for (size_t j = k; j < n-k; j++)
-        {
-            sum += matrix[i][j];
-        }
+       
+        sum += matrix[i][k];
+        sum += matrix[k][i];
+        sum += matrix[i][n-k-1];
+        sum += matrix[n-k-1][i];
         
+
     }
+    sum -= matrix[k][k];
+    sum -= matrix[k][n-k-1];
+    sum -= matrix[n-k-1][k];
+    sum -= matrix[n-k-1][n-k-1];
+    return sum;
 }
-void equalRings(int matrix[][100],int x,int maxX,int*& coords,int target, int size) {
-    if (x<maxX)
+void equalRings(int** matrix, int x, int* coords, int target, int size) {
+    if (x < 0)
     {
         return;
     }
-    if (sum(matrix,x,size)!=target)
+    if (sum(matrix, x, size) != target)
     {
         coords[0] = x;
         coords[1] = x;
@@ -30,32 +38,52 @@ void equalRings(int matrix[][100],int x,int maxX,int*& coords,int target, int si
     }
     else
     {
-        equalRings(matrix, x - 1, maxX, coords,target,size);
+        equalRings(matrix, x - 1, coords, target, size);
     }
 
 }
 int main()
 {
-    int n=5;
+    int n = 5;
     //cin >> n;
-    int coords[2] = {-1,-1};
-    int matrix[5][5];
-    int target=0;
-    if (n%2==0)
+    int coords[2] = { -1,-1 };
+    
+    int row1[] = { 1,2,-3,5,-2 };
+    int row2[] = {-5,10,5,-2,1 };
+    int row3[] = { 1,13,20,0,-3 };
+    int row4[] = { 2,-7,5,10,3 };
+    int row5[] = { 10,2,2,3,1 };
+    int* matrix[] = { row1,row2,row3,row4,row5 };
+    
+    int target = 0;
+    int startIndex;
+
+    if (n % 2 == 0)
     {
-        for (size_t i = n/2-1; i <= n/2; i++)
+        for (size_t i = n / 2 - 1; i <= n / 2; i++)
         {
             for (size_t j = n / 2 - 1; j <= n / 2; j++)
             {
                 target += matrix[i][j];
             }
-           
+
         }
+        startIndex = n / 2 - 2;
     }
     else
     {
-        target = matrix[n/2-1][n/2-1];
+        target = matrix[n / 2 ][n / 2 ];
+        startIndex = n / 2 - 1;
     }
+    equalRings(matrix,startIndex,coords,target,n);
+    
+    cout << coords[0] << " " << coords[1];
+    
+    /*for (int i = 0; i < n; i++)
+    {
+        delete[] matrix[i];
+    }
+    delete[] matrix;*/
 
 }
 
