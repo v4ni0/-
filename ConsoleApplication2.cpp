@@ -1,99 +1,116 @@
-// ConsoleApplication2.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+#include <cassert>
 #include <iostream>
-#include <cstring>
-#include "ConsoleApplication7.h"
 
 using namespace std;
+// dynamic array with a specified capacity and with certain number of elements (size)
 
-int sum(int** matrix, int k, int n) {
-    int sum = 0;
-    for (size_t i = k; i < n - k; i++)
-    {
-       
-        sum += matrix[i][k];
-        sum += matrix[k][i];
-        sum += matrix[i][n-k-1];
-        sum += matrix[n-k-1][i];
-        
+// reason why the input argument for the array is of type int*&?
+// create a header file with the declarations of the functions,
+// move the definitions to a .cpp file
+// show how they are used in main.cpp
 
-    }
-    sum -= matrix[k][k];
-    sum -= matrix[k][n-k-1];
-    sum -= matrix[n-k-1][k];
-    sum -= matrix[n-k-1][n-k-1];
-    return sum;
+// allocate the memory
+void allocateMemory(int*& array, size_t capacity)
+{
+    array = new int[capacity];
 }
-void equalRings(int** matrix, int x, int* coords, int target, int size) {
-    if (x < 0)
-    {
-        return;
-    }
-    if (sum(matrix, x, size) != target)
-    {
-        coords[0] = x;
-        coords[1] = x;
-        return;
-    }
-    else
-    {
-        equalRings(matrix, x - 1, coords, target, size);
-    }
 
+// delete the allocated memory
+void freeMemory(int*& array, size_t& size, size_t& capacity)
+{
+    delete[] array;
 }
+
+// reallocate memory with different capacity
+bool reallocateMemory(int*& array, size_t size, size_t newCapacity)
+{
+    array = new int[newCapacity];
+}
+
+// resize the array, if necessary
+// double the size
+bool resize(int*& array, size_t size, size_t& capacity)
+{
+    int* newArr = new int[size * 2];
+    for (size_t i = 0; i < size; i++)
+    {
+        newArr[i] = array[i];
+    }
+    array = newArr;
+}
+
+ /*add element at the end of the array
+ if the size is less than the capacity, the array should be resized
+ resize the array, if necessary*/
+bool addElement(int*& array, size_t& size, size_t& capacity, int newElem)
+{
+    if (size<capacity)
+    {
+        resize(array, size, capacity);
+        size *= 2;
+    }
+    array[capacity - 1] = newElem;
+}
+
+// add element at a specified position of the array
+// resize if necessary
+bool addElement(int*& array, size_t& size, size_t& capacity, int newElem, size_t position)
+{
+    if (size < capacity)
+    {
+        resize(array, size, capacity);
+        size *= 2;
+    }
+    
+}
+
+// print the elements of the array
+void print(const int* array, size_t size, size_t capacity)
+{
+}
+
+// remove the element at the specified position
+// if the number of elements are less than 1/4 of the capacity,
+// resize the array, use half of its capacity
+bool removeElement(int*& array, size_t& size, size_t& capacity, size_t position)
+{
+}
+
 int main()
 {
-    int n = 5;
-    //cin >> n;
-    int coords[2] = { -1,-1 };
-    
-    int row1[] = { 1,2,-3,5,-2 };
-    int row2[] = {-5,10,5,-2,1 };
-    int row3[] = { 1,13,20,0,-3 };
-    int row4[] = { 2,-7,5,10,3 };
-    int row5[] = { 10,2,2,3,1 };
-    int* matrix[] = { row1,row2,row3,row4,row5 };
-    
-    int target = 0;
-    int startIndex;
+    // dynamically allocated array which can be resized
+    int* array{ nullptr };
 
-    if (n % 2 == 0)
-    {
-        for (size_t i = n / 2 - 1; i <= n / 2; i++)
-        {
-            for (size_t j = n / 2 - 1; j <= n / 2; j++)
-            {
-                target += matrix[i][j];
-            }
+    // capacity of the array
+    size_t capacity = 3;
 
-        }
-        startIndex = n / 2 - 2;
-    }
-    else
-    {
-        target = matrix[n / 2 ][n / 2 ];
-        startIndex = n / 2 - 1;
-    }
-    equalRings(matrix,startIndex,coords,target,n);
-    
-    cout << coords[0] << " " << coords[1];
-    
-    /*for (int i = 0; i < n; i++)
-    {
-        delete[] matrix[i];
-    }
-    delete[] matrix;*/
+    // exact number of elements in the array
+    size_t size = 0;
 
+    allocateMemory(array, capacity);
+
+    addElement(array, size, capacity, 1);
+    addElement(array, size, capacity, 2);
+    addElement(array, size, capacity, 3);
+
+    std::cout << "The capacity of the array is " << capacity << std::endl;
+    std::cout << "The real count of the elements in the array is " << size << std::endl;
+    print(array, size, capacity);
+
+    addElement(array, size, capacity, 4, 2);
+
+    std::cout << "\nThe capacity of the array is " << capacity << std::endl;
+    std::cout << "The real count of the elements in the array is " << size << std::endl;
+    print(array, size, capacity);
+
+    removeElement(array, size, capacity, 0);
+    removeElement(array, size, capacity, 0);
+    removeElement(array, size, capacity, 0);
+
+    std::cout << "\nThe capacity of the array is " << capacity << std::endl;
+    std::cout << "The real count of the elements in the array is " << size << std::endl;
+
+    print(array, size, capacity);
+
+    freeMemory(array, size, capacity);
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
