@@ -2,104 +2,65 @@
 //
 
 #include <iostream>
+#include <cassert>
+#include <iomanip>
+#include "Student.h"
 using namespace std;
-#include<cstring>
-
-
-//ZADACHA4
-// bool convertToStrNumber(char* str){// не се сетих как да стане ако повторенията на буква са повече от 10
-//    int length = strlen(str);
-//    int* arr = new int[length];
-//    for (int i = 0; str[i]!= '\0'; i++)
-//    {
-//        int counter = 0;
-//        for (int j = 0; str[j]!='\0'; j++)
-//        {
-//            if (str[i]==str[j])
-//            {
-//                counter++;
-//            }
-//        }
-//        arr[i] = counter;
-//    }
-//    long sum = 0;
-//    for (int i = 0; i < length; i++)
-//    {
-//        int counter = 0;
-//        int copy = arr[i];
-//        while (copy!=0)
-//        {
-//            copy /= 10;
-//            counter++;
-//        }
-//        sum += counter;
-//    }
-//    if (sum>1024)
-//    {
-//        return false;
-//    }
-//
-//    for (int i = 0; i < length; i++)
-//    {
-//        str[i] = arr[i]+48;
-//    }
-//    delete[] arr;
-//    return true;
+//struct Student {
+//    int fn, kurs;
+//    double averageGrade;
+//    void initStudent();
+//    void print();
+//};
+//void Student::initStudent()
+//{
+//    cout << "fnumber:";
+//    cin >> fn;
+//    assert(fn>=10000&&fn<=99999);
+//    cout <<endl<< "kurs:";
+//    cin >> kurs;
+//    assert(kurs>=1 && kurs <= 4);
+//    cout << endl << "average grade:";
+//    cin >> averageGrade;
+//    assert(averageGrade >= 2 && averageGrade <= 6);
 //
 //}
+//void Student::print()
+//{
+//    cout << "fnumber:" << fn<<endl;
+//    cout << "kurs:" << kurs<<endl;
+//    cout << "average grade:" <<setprecision(3)<< averageGrade<<endl;
+//}
+
+struct Group {
+    int number=0;
+    double groupAverage=0;
+    Student* students= new Student[number];
+    void createGroup();
+    void calculateAverage();
+};
+void Group::createGroup()
+{
+    for (size_t i = 0; i < number; i++)
+    {
+        students[i].initStudent();
+    }
+}
+
+void Group::calculateAverage()
+{
+    double sum;
+    for (int i = 0; i < number; i++)
+    {
+        sum += students[i].averageGrade;
+    }
+}
+
+
 int main()
 {
-    /*ZADACHA1
-    int digitCounter = 0;
-    int letterCounter = 0;
-    int othersCounter = 0;
-    char* str = new char[100];
-    cin.getline(str, 100);
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        if (isdigit(str[i]))
-        {
-            digitCounter++;
-        }
-        else  if (isalpha(str[i]))
-        {
-            letterCounter++;
-        }
-        else
-        {
-            othersCounter++;
-        }
-    }
-    cout << "digits:" << digitCounter << " letters:" << letterCounter << " others:" << othersCounter;*/
-
-    /*ZADACHA2,ZADACHA3*/
-     /*int n ;
-     cin>>n;
-     cin.ignore();
-    char* str = new char[n+1]();
-    cin.getline(str, n+1);
-    int number = 0;
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        number = number * 10 + str[i] - '0';
-    }
-    cout << number;
-    delete[] str;*/
-
-
-    /*ZADACHA4
-    char* str = new char[1024];
-    cin.getline(str, 1024);
-    convertToStrNumber(str);
-    for (int i = 0; i < strlen(str); i++)
-    {
-        cout << str[i];
-    }*/
-
-
-
     
-
+    
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
@@ -112,3 +73,4 @@ int main()
 //   4. Use the Error List window to view errors
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+
