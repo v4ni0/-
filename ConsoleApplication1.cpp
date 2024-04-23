@@ -1,66 +1,77 @@
-// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// ConsoleApplication5.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <cassert>
-#include <iomanip>
-#include "Student.h"
 using namespace std;
-//struct Student {
-//    int fn, kurs;
-//    double averageGrade;
-//    void initStudent();
-//    void print();
-//};
-//void Student::initStudent()
-//{
-//    cout << "fnumber:";
-//    cin >> fn;
-//    assert(fn>=10000&&fn<=99999);
-//    cout <<endl<< "kurs:";
-//    cin >> kurs;
-//    assert(kurs>=1 && kurs <= 4);
-//    cout << endl << "average grade:";
-//    cin >> averageGrade;
-//    assert(averageGrade >= 2 && averageGrade <= 6);
-//
-//}
-//void Student::print()
-//{
-//    cout << "fnumber:" << fn<<endl;
-//    cout << "kurs:" << kurs<<endl;
-//    cout << "average grade:" <<setprecision(3)<< averageGrade<<endl;
-//}
 
-struct Group {
-    int number=0;
-    double groupAverage=0;
-    Student* students= new Student[number];
-    void createGroup();
-    void calculateAverage();
+class Vehicle
+{
+private:
+    char* make;
+    char* model;
+    int horsepower;
+public:
+    Vehicle();
+    Vehicle(const Vehicle& other);
+    Vehicle& operator=(const Vehicle& other);
+    const char* getMake() const;
+    const char* getModel() const;
+    const int getHorsepower() const;
+    ~Vehicle();
 };
-void Group::createGroup()
+Vehicle::Vehicle():make(nullptr),model(nullptr),horsepower(0)
 {
-    for (size_t i = 0; i < number; i++)
-    {
-        students[i].initStudent();
-    }
+    
 }
 
-void Group::calculateAverage()
+Vehicle::Vehicle(const Vehicle& other):horsepower(other.horsepower)
 {
-    double sum;
-    for (int i = 0; i < number; i++)
-    {
-        sum += students[i].averageGrade;
-    }
+    make = new char[strlen(other.make)+1];
+    strcpy(make,other.make);
+    model = new char[strlen(other.model) + 1];
+    strcpy(model, other.model);
+    
 }
 
+Vehicle& Vehicle::operator=(const Vehicle& other)
+{
+    if (this!=&other)
+    {
+        delete[] model;
+        delete[] make;
+        make = new char[strlen(other.make) + 1];
+        strcpy(make, other.make);
+        model = new char[strlen(other.model) + 1];
+        strcpy(model, other.model);
+    }
+    return *this;
+}
+
+const char* Vehicle::getMake() const
+{
+    return make;
+}
+
+const char* Vehicle::getModel() const
+{
+    return model;
+}
+
+const int Vehicle::getHorsepower() const
+{
+    return horsepower;
+}
+
+Vehicle::~Vehicle()
+{
+    delete[] make;
+    delete[] model;
+}
 
 int main()
 {
-    
-    
+	
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
@@ -73,4 +84,5 @@ int main()
 //   4. Use the Error List window to view errors
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+
 
